@@ -1,24 +1,5 @@
-// @ts-nocheck
-import express from "express";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../server/routers";
-import { createContext } from "../server/_core/context";
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-const app = express();
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
-
-app.use(
-  "/api/trpc",
-  createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  })
-);
-
-// Health check
-app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, db: !!process.env.DATABASE_URL });
-});
-
-export default app;
+export default function handler(req: VercelRequest, res: VercelResponse) {
+  res.json({ ok: true, path: req.url });
+}
