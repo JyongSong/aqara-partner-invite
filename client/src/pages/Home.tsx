@@ -221,18 +221,18 @@ export default function Home() {
           </div>
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-            <Star className="w-3 h-3 fill-amber-300" />
+          <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-sm font-semibold px-3 py-1.5 rounded-full mb-5">
+            <Star className="w-3.5 h-3.5 fill-amber-300" />
             공식 소매 파트너 모집
           </div>
 
           {/* Headline */}
-          <h1 className="text-2xl sm:text-3xl font-bold leading-tight mb-4 text-white">
+          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-4 text-white">
             도어락 판매를 넘어,<br />
             <span className="text-amber-400">IoT 설치 수익</span>까지<br />
             함께 만드는 새로운 기회
           </h1>
-          <p className="text-gray-300 text-sm leading-relaxed mb-8">
+          <p className="text-gray-300 text-base leading-relaxed mb-8">
             아카라(Aqara) 공식 소매 파트너 설명회에 초대합니다.<br />
             직공급 구조 + 설치 교육 + IoT 수익 모델을 공개합니다.
           </p>
@@ -246,8 +246,8 @@ export default function Home() {
               "아카라 스마트홈 스타터킷 증정 (사전 설문 응답 시)",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-gray-200">{item}</span>
+                <CheckCircle2 className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <span className="text-base text-gray-200">{item}</span>
               </div>
             ))}
           </div>
@@ -256,44 +256,44 @@ export default function Home() {
           <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-5 mb-8">
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <Calendar className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <Calendar className="w-5 h-5 text-amber-400 flex-shrink-0" />
                 <div>
-                  <div className="text-xs text-gray-400">일시</div>
-                  <div className="text-sm font-semibold text-white">2026년 4월 4일(토) 10:30 ~ 16:00</div>
+                  <div className="text-sm text-gray-400">일시</div>
+                  <div className="text-base font-semibold text-white">2026년 4월 4일(토) 10:30 ~ 16:00</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-xs text-gray-400">장소</div>
-                  <div className="text-sm font-semibold text-white">스타크 강남빌딩 마이워크스페이스타워 B1 교육장</div>
-                  <div className="text-xs text-gray-400 mt-0.5">서울특별시 서초구 강남대로53길 8</div>
+                  <div className="text-sm text-gray-400">장소</div>
+                  <div className="text-base font-semibold text-white">스타크 강남빌딩 마이워크스페이스타워 B1 교육장</div>
+                  <div className="text-sm text-gray-400 mt-0.5">서울특별시 서초구 강남대로53길 8</div>
                   <a
                     href="https://naver.me/5t7s50VR"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-amber-400 mt-1 hover:text-amber-300"
+                    className="inline-flex items-center gap-1 text-sm text-amber-400 mt-1 hover:text-amber-300"
                   >
-                    <MapPin className="w-3 h-3" />
+                    <MapPin className="w-3.5 h-3.5" />
                     네이버 지도로 보기 →
                   </a>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Users className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <Users className="w-5 h-5 text-amber-400 flex-shrink-0" />
                 <div>
-                  <div className="text-xs text-gray-400">참석 인원</div>
-                  <div className="text-sm font-semibold text-white">선착순 50명 (사전 신청 필수)</div>
+                  <div className="text-sm text-gray-400">참석 인원</div>
+                  <div className="text-base font-semibold text-white">선착순 50명 (사전 신청 필수)</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* CTA */}
-          <a href="#survey" className="block w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-center py-4 rounded-xl text-base transition-colors">
+          <a href="#survey" className="block w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-center py-4 rounded-xl text-lg transition-colors">
             참석 신청 + 사전 설문 작성하기
           </a>
-          <p className="text-center text-xs text-gray-500 mt-3">
+          <p className="text-center text-sm text-gray-500 mt-3">
             ※ 사전 설문 응답 시 아카라 스마트홈 스타터킷 증정 (현장 수령)
           </p>
         </div>
@@ -308,15 +308,15 @@ export default function Home() {
       <section className="bg-white py-12">
         <div className="max-w-xl mx-auto px-5">
           <div className="text-center mb-8">
-            <div className="text-xs font-semibold text-amber-600 tracking-widest uppercase mb-2">Aqara Smart Door Lock</div>
-            <h2 className="text-xl font-bold text-gray-900">글로벌 No.1 스마트 도어락</h2>
-            <p className="text-sm text-gray-500 mt-2">2009년 설립 · 전세계 1,300만+ 유저 · 61개국 진출</p>
+            <div className="text-sm font-semibold text-amber-600 tracking-widest uppercase mb-2">Aqara Smart Door Lock</div>
+            <h2 className="text-2xl font-bold text-gray-900">글로벌 No.1 스마트 도어락</h2>
+            <p className="text-base text-gray-500 mt-2">2009년 설립 · 전세계 1,300만+ 유저 · 61개국 진출</p>
           </div>
           <div className="grid grid-cols-3 gap-3">
             {PRODUCTS.map(p => (
               <div key={p.value} className="bg-gray-50 rounded-2xl p-3 text-center border border-gray-100">
                 <img src={p.img} alt={p.label} className="w-full aspect-square object-contain mb-2" />
-                <div className="text-xs font-bold text-gray-800">{p.label}</div>
+                <div className="text-sm font-bold text-gray-800">{p.label}</div>
               </div>
             ))}
           </div>
@@ -327,8 +327,8 @@ export default function Home() {
       <section className="bg-gray-50 py-12">
         <div className="max-w-xl mx-auto px-5">
           <div className="text-center mb-8">
-            <div className="text-xs font-semibold text-amber-600 tracking-widest uppercase mb-2">Program</div>
-            <h2 className="text-xl font-bold text-gray-900">주요 프로그램</h2>
+            <div className="text-sm font-semibold text-amber-600 tracking-widest uppercase mb-2">Program</div>
+            <h2 className="text-2xl font-bold text-gray-900">주요 프로그램</h2>
           </div>
           <div className="space-y-4">
             {[
@@ -342,11 +342,11 @@ export default function Home() {
                   <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
                     <prog.icon className="w-4 h-4 text-amber-600" />
                   </div>
-                  <div className="text-sm font-bold text-gray-900">{i + 1}. {prog.title}</div>
+                  <div className="text-base font-bold text-gray-900">{i + 1}. {prog.title}</div>
                 </div>
                 <ul className="space-y-1.5 pl-11">
                   {prog.items.map((item, j) => (
-                    <li key={j} className="text-xs text-gray-600 flex items-start gap-1.5">
+                    <li key={j} className="text-sm text-gray-600 flex items-start gap-1.5">
                       <span className="text-amber-500 mt-0.5 flex-shrink-0">·</span>
                       {item}
                     </li>
@@ -362,8 +362,8 @@ export default function Home() {
       <section className="bg-black text-white py-12">
         <div className="max-w-xl mx-auto px-5">
           <div className="text-center mb-8">
-            <div className="text-xs font-semibold text-amber-400 tracking-widest uppercase mb-2">Benefits</div>
-            <h2 className="text-xl font-bold">참석 혜택</h2>
+            <div className="text-sm font-semibold text-amber-400 tracking-widest uppercase mb-2">Benefits</div>
+            <h2 className="text-2xl font-bold">참석 혜택</h2>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {[
@@ -374,8 +374,8 @@ export default function Home() {
             ].map((b, i) => (
               <div key={i} className="bg-white/10 border border-white/20 rounded-2xl p-4">
                 <div className="text-2xl mb-2">{b.icon}</div>
-                <div className="text-sm font-bold mb-1">{b.title}</div>
-                <div className="text-xs text-gray-400">{b.desc}</div>
+                <div className="text-base font-bold mb-1">{b.title}</div>
+                <div className="text-sm text-gray-400">{b.desc}</div>
               </div>
             ))}
           </div>
@@ -398,7 +398,7 @@ export default function Home() {
           </div>
 
           <div className="text-center mb-8">
-            <div className="text-xs font-semibold text-amber-600 tracking-widest uppercase mb-2">Pre-Survey</div>
+            <div className="text-sm font-semibold text-amber-600 tracking-widest uppercase mb-2">Pre-Survey</div>
             <h2 className="text-2xl font-bold text-gray-900">참석 신청 + 사전 설문</h2>
             <p className="text-base text-gray-500 mt-2">
               사전 설문 응답 완료 시 <span className="font-semibold text-amber-600">아카라 스마트홈 스타터킷</span>을 현장에서 증정합니다.
