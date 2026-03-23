@@ -429,7 +429,7 @@ export default function Home() {
                 </div>
                 <div data-error={errors.contactPosition}>
                   <label className="block text-sm font-semibold text-gray-800 mb-2">Q4. 직책 <span className="text-red-500">*</span></label>
-                  <input type="text" value={form.contactPosition} onChange={e => update("contactPosition", e.target.value)} placeholder="직책을 입력해 주세요 (예: 대표, 부장, 과장)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
+                  <input type="text" value={form.contactPosition} onChange={e => update("contactPosition", e.target.value)} placeholder="직책을 입력해 주세요 (예: 사장, 실장, 기사)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
                   {errors.contactPosition && <p className="text-red-500 text-xs mt-1">{errors.contactPosition}</p>}
                 </div>
                 <div data-error={errors.contactPhone}>
