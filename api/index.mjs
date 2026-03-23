@@ -306,6 +306,12 @@ async function getUserByOpenId(openId) {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
   return result.length > 0 ? result[0] : void 0;
 }
+async function getSurveyResponseByPhone(phone) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.select().from(surveyResponses).where(eq(surveyResponses.contactPhone, phone)).limit(1);
+  return result.length > 0 ? result[0] : void 0;
+}
 async function insertSurveyResponse(data) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
@@ -365,6 +371,13 @@ var appRouter = router({
   survey: router({
     // 설문 제출 (공개)
     submit: publicProcedure.input(surveyInputSchema).mutation(async ({ input, ctx }) => {
+      const existing = await getSurveyResponseByPhone(input.contactPhone);
+      if (existing) {
+        throw new TRPCError3({
+          code: "CONFLICT",
+          message: "\uC774\uBBF8 \uD574\uB2F9 \uC5F0\uB77D\uCC98\uB85C \uC124\uBB38\uC774 \uC81C\uCD9C\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+        });
+      }
       const ipAddress = ctx.req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || ctx.req.socket?.remoteAddress || null;
       await insertSurveyResponse({
         ...input,

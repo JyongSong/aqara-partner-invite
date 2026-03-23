@@ -124,7 +124,11 @@ export default function Home() {
       navigate("/success");
     },
     onError: (err) => {
-      toast.error("제출 중 오류가 발생했습니다. 다시 시도해 주세요.");
+      if (err.data?.code === "CONFLICT") {
+        toast.error("이미 해당 연락처로 설문이 제출되었습니다.");
+      } else {
+        toast.error("제출 중 오류가 발생했습니다. 다시 시도해 주세요.");
+      }
       console.error(err);
       setIsSubmitting(false);
     },

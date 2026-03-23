@@ -6,6 +6,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import {
   getAllSurveyResponses,
+  getSurveyResponseByPhone,
   getSurveyResponseCount,
   insertSurveyResponse,
 } from "./db";
@@ -63,6 +64,15 @@ export const appRouter = router({
     submit: publicProcedure
       .input(surveyInputSchema)
       .mutation(async ({ input, ctx }) => {
+        // 중복 제출 방지: 동일 연락처 확인
+        const existing = await getSurveyResponseByPhone(input.contactPhone);
+        if (existing) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "이미 해당 연락처로 설문이 제출되었습니다.",
+          });
+        }
+
         const ipAddress =
           (ctx.req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
           ctx.req.socket?.remoteAddress ||

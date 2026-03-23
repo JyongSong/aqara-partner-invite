@@ -66,6 +66,13 @@ export async function getUserByOpenId(openId: string) {
 
 // ── Survey Response Queries ──────────────────────────────────────────────────
 
+export async function getSurveyResponseByPhone(phone: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.select().from(surveyResponses).where(eq(surveyResponses.contactPhone, phone)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
 export async function insertSurveyResponse(data: InsertSurveyResponse) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
