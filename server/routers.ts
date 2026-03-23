@@ -16,12 +16,14 @@ const surveyInputSchema = z.object({
   attendanceStatus: z.enum(["attend", "not_attend", "reviewing"]),
   businessName: z.string().min(1).max(200),
   contactName: z.string().min(1).max(100),
+  contactPosition: z.string().min(1).max(100),
   contactPhone: z.string().min(1).max(30),
   email: z.string().email().optional().or(z.literal("")),
 
   // 섹션 2
-  businessRegion: z.string().min(1).max(50),
-  businessRegionDetail: z.string().max(100).optional(),
+  businessZipcode: z.string().max(10).optional(),
+  businessAddress: z.string().min(1).max(300),
+  businessAddressDetail: z.string().max(200).optional(),
   salesExperience: z.enum(["under1", "1to3", "3to5", "5to10", "over10"]),
   annualSalesVolume: z.enum(["under100", "100to300", "300to500", "500to1000", "over1000"]),
   salesTarget: z.enum(["enduser", "b2b", "both"]),
@@ -69,7 +71,8 @@ export const appRouter = router({
         await insertSurveyResponse({
           ...input,
           email: input.email || null,
-          businessRegionDetail: input.businessRegionDetail || null,
+          businessZipcode: input.businessZipcode || null,
+          businessAddressDetail: input.businessAddressDetail || null,
           attendancePurpose: JSON.stringify(input.attendancePurpose),
           attendancePurposeOther: input.attendancePurposeOther || null,
           interestedProducts: input.interestedProducts

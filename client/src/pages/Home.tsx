@@ -9,7 +9,6 @@ const K100_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663375882276/AcFek
 const L100_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663375882276/AcFeksXYT56o4U9QsgyZGe/doorlock_l100_b1d33277.png";
 const U100_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663375882276/AcFeksXYT56o4U9QsgyZGe/doorlock_u100_cec83568.png";
 
-const REGIONS = ["서울","경기","인천","부산","대구","대전","광주","울산","세종","강원","충북","충남","전북","전남","경북","경남","제주"];
 
 const PURPOSE_OPTIONS = [
   { value: "supply_condition", label: "새로운 공급 조건 확인" },
@@ -30,10 +29,12 @@ type FormData = {
   attendanceStatus: "attend" | "not_attend" | "reviewing";
   businessName: string;
   contactName: string;
+  contactPosition: string;
   contactPhone: string;
   email: string;
-  businessRegion: string;
-  businessRegionDetail: string;
+  businessZipcode: string;
+  businessAddress: string;
+  businessAddressDetail: string;
   salesExperience: "under1" | "1to3" | "3to5" | "5to10" | "over10";
   annualSalesVolume: "under100" | "100to300" | "300to500" | "500to1000" | "over1000";
   salesTarget: "enduser" | "b2b" | "both";
@@ -50,10 +51,12 @@ const initialForm: FormData = {
   attendanceStatus: "attend",
   businessName: "",
   contactName: "",
+  contactPosition: "",
   contactPhone: "",
   email: "",
-  businessRegion: "",
-  businessRegionDetail: "",
+  businessZipcode: "",
+  businessAddress: "",
+  businessAddressDetail: "",
   salesExperience: "1to3",
   annualSalesVolume: "100to300",
   salesTarget: "enduser",
@@ -127,6 +130,29 @@ export default function Home() {
     },
   });
 
+  const openPostcodeSearch = () => {
+    const daum = (window as any).daum;
+    if (!daum?.Postcode) {
+      toast.error("주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.");
+      return;
+    }
+    new daum.Postcode({
+      oncomplete: (data: any) => {
+        const addr = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+        setForm(prev => ({
+          ...prev,
+          businessZipcode: data.zonecode,
+          businessAddress: addr,
+        }));
+        setErrors(prev => ({ ...prev, businessAddress: undefined }));
+        // 상세주소 입력 필드에 포커스
+        setTimeout(() => {
+          document.getElementById("businessAddressDetail")?.focus();
+        }, 100);
+      },
+    }).open();
+  };
+
   const update = (field: keyof FormData, value: unknown) => {
     setForm(prev => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
@@ -136,8 +162,9 @@ export default function Home() {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
     if (!form.businessName.trim()) newErrors.businessName = "업체명을 입력해 주세요.";
     if (!form.contactName.trim()) newErrors.contactName = "성함을 입력해 주세요.";
+    if (!form.contactPosition.trim()) newErrors.contactPosition = "직책을 입력해 주세요.";
     if (!form.contactPhone.trim()) newErrors.contactPhone = "연락처를 입력해 주세요.";
-    if (!form.businessRegion) newErrors.businessRegion = "사업장 소재지를 선택해 주세요.";
+    if (!form.businessAddress) newErrors.businessAddress = "사업장 주소를 검색해 주세요.";
     if (form.attendancePurpose.length === 0) newErrors.attendancePurpose = "참석 사유를 하나 이상 선택해 주세요.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -156,10 +183,12 @@ export default function Home() {
       attendanceStatus: form.attendanceStatus,
       businessName: form.businessName,
       contactName: form.contactName,
+      contactPosition: form.contactPosition,
       contactPhone: form.contactPhone,
       email: form.email || undefined,
-      businessRegion: form.businessRegion,
-      businessRegionDetail: form.businessRegionDetail || undefined,
+      businessZipcode: form.businessZipcode,
+      businessAddress: form.businessAddress,
+      businessAddressDetail: form.businessAddressDetail || undefined,
       salesExperience: form.salesExperience,
       annualSalesVolume: form.annualSalesVolume,
       salesTarget: form.salesTarget,
@@ -394,12 +423,17 @@ export default function Home() {
                   {errors.businessName && <p className="text-red-500 text-xs mt-1">{errors.businessName}</p>}
                 </div>
                 <div data-error={errors.contactName}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q3. 성함 / 직책 <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q3. 성함 <span className="text-red-500">*</span></label>
                   <input type="text" value={form.contactName} onChange={e => update("contactName", e.target.value)} placeholder="성함을 입력해 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
                   {errors.contactName && <p className="text-red-500 text-xs mt-1">{errors.contactName}</p>}
                 </div>
+                <div data-error={errors.contactPosition}>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q4. 직책 <span className="text-red-500">*</span></label>
+                  <input type="text" value={form.contactPosition} onChange={e => update("contactPosition", e.target.value)} placeholder="직책을 입력해 주세요 (예: 대표, 부장, 과장)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
+                  {errors.contactPosition && <p className="text-red-500 text-xs mt-1">{errors.contactPosition}</p>}
+                </div>
                 <div data-error={errors.contactPhone}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q4. 연락처 <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q5. 연락처 <span className="text-red-500">*</span></label>
                   <input type="tel" value={form.contactPhone} onChange={e => update("contactPhone", e.target.value)} placeholder="010-0000-0000" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
                   {errors.contactPhone && <p className="text-red-500 text-xs mt-1">{errors.contactPhone}</p>}
                 </div>
@@ -419,17 +453,20 @@ export default function Home() {
                 <h3 className="text-base font-bold text-gray-900">사업 현황</h3>
               </div>
               <div className="space-y-5">
-                <div data-error={errors.businessRegion}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q5. 사업장 소재지 <span className="text-red-500">*</span></label>
-                  <select value={form.businessRegion} onChange={e => update("businessRegion", e.target.value)} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors bg-white appearance-none">
-                    <option value="">지역을 선택해 주세요</option>
-                    {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
-                  </select>
-                  {errors.businessRegion && <p className="text-red-500 text-xs mt-1">{errors.businessRegion}</p>}
-                  <input type="text" value={form.businessRegionDetail} onChange={e => update("businessRegionDetail", e.target.value)} placeholder="시/군/구 (선택 입력)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors mt-2" />
+                <div data-error={errors.businessAddress}>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q6. 사업장 주소 <span className="text-red-500">*</span></label>
+                  <div className="flex gap-2 mb-2">
+                    <input type="text" value={form.businessZipcode} readOnly placeholder="우편번호" className="w-28 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 text-gray-600" />
+                    <button type="button" onClick={openPostcodeSearch} className="px-4 py-3 bg-amber-500 text-white text-sm font-semibold rounded-xl hover:bg-amber-600 transition-colors whitespace-nowrap">
+                      우편번호 검색
+                    </button>
+                  </div>
+                  <input type="text" value={form.businessAddress} readOnly placeholder="주소 검색 버튼을 눌러 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 text-gray-600 mb-2" />
+                  {errors.businessAddress && <p className="text-red-500 text-xs mt-1 mb-2">{errors.businessAddress}</p>}
+                  <input id="businessAddressDetail" type="text" value={form.businessAddressDetail} onChange={e => update("businessAddressDetail", e.target.value)} placeholder="상세 주소 입력 (건물명, 층, 호수 등)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q6. 도어락 판매 경력 <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q7. 도어락 판매 경력 <span className="text-red-500">*</span></label>
                   <RadioGroup name="salesExp" value={form.salesExperience} onChange={v => update("salesExperience", v)} options={[
                     { value: "under1", label: "1년 미만" },
                     { value: "1to3", label: "1~3년" },
@@ -439,7 +476,7 @@ export default function Home() {
                   ]} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q7. 2025년 연간 도어락 판매 대수 <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q8. 2025년 연간 도어락 판매 대수 <span className="text-red-500">*</span></label>
                   <RadioGroup name="salesVol" value={form.annualSalesVolume} onChange={v => update("annualSalesVolume", v)} options={[
                     { value: "under100", label: "100대 미만" },
                     { value: "100to300", label: "100~300대" },
@@ -449,7 +486,7 @@ export default function Home() {
                   ]} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q8. 주요 판매 대상 <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q9. 주요 판매 대상 <span className="text-red-500">*</span></label>
                   <RadioGroup name="salesTarget" value={form.salesTarget} onChange={v => update("salesTarget", v)} options={[
                     { value: "enduser", label: "일반 소비자 (End-user 중심)" },
                     { value: "b2b", label: "소매/재판매 (B2B/B2B2C)" },
@@ -469,7 +506,7 @@ export default function Home() {
               </div>
               <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q9. 설치 기사 운영 방식 <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q10. 설치 기사 운영 방식 <span className="text-red-500">*</span></label>
                   <RadioGroup name="installMethod" value={form.installationMethod} onChange={v => update("installationMethod", v)} options={[
                     { value: "own_team", label: "자체 설치팀 운영" },
                     { value: "outsource", label: "외주(협력기사) 활용" },
@@ -477,7 +514,7 @@ export default function Home() {
                   ]} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q10. 설치 기사 인원 <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q11. 설치 기사 인원 <span className="text-red-500">*</span></label>
                   <RadioGroup name="installStaff" value={form.installationStaff} onChange={v => update("installationStaff", v)} options={[
                     { value: "none", label: "없음" },
                     { value: "1to2", label: "1~2명" },
@@ -498,7 +535,7 @@ export default function Home() {
                 <h3 className="text-base font-bold text-gray-900">사업 확장 가능성</h3>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-800 mb-2">Q11. 도어락 외 IoT/설치형 제품 사업 확대 의향 <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-semibold text-gray-800 mb-2">Q12. 도어락 외 IoT/설치형 제품 사업 확대 의향 <span className="text-red-500">*</span></label>
                 <RadioGroup name="iotIntent" value={form.iotExpansionIntent} onChange={v => update("iotExpansionIntent", v)} options={[
                   { value: "already", label: "이미 진행 중" },
                   { value: "reviewing", label: "검토 중" },
@@ -518,7 +555,7 @@ export default function Home() {
               </div>
               <div className="space-y-5">
                 <div data-error={errors.attendancePurpose}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q12. 설명회 참석 사유 / 기대 사항 <span className="text-red-500">*</span> <span className="text-gray-400 font-normal">(복수 선택 가능)</span></label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q13. 설명회 참석 사유 / 기대 사항 <span className="text-red-500">*</span> <span className="text-gray-400 font-normal">(복수 선택 가능)</span></label>
                   <CheckboxGroup value={form.attendancePurpose} onChange={v => update("attendancePurpose", v)} options={PURPOSE_OPTIONS} />
                   {errors.attendancePurpose && <p className="text-red-500 text-xs mt-1">{errors.attendancePurpose}</p>}
                   {form.attendancePurpose.includes("other") && (

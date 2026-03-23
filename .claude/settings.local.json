@@ -18,7 +18,8 @@
       "Bash(curl -s \"https://aqara-partner-invite.vercel.app/api/trpc/survey.count\")",
       "Bash(npx esbuild:*)",
       "Bash(DATABASE_URL=\"postgresql://postgres.jhinkxdunoxiwtdygzrw:KJkqx6lLtWcpqnms@aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1\" node -e \":*)",
-      "Bash(curl -s \"https://aqara-partner-invite.vercel.app/api/health\")"
+      "Bash(curl -s \"https://aqara-partner-invite.vercel.app/api/health\")",
+      "Bash(node -e \":*)"
     ]
   }
 }
