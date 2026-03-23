@@ -492,8 +492,8 @@ export default function Home() {
                 <div>
                   <label className="block text-base font-semibold text-gray-800 mb-2">Q9. 주요 판매 대상 <span className="text-red-500">*</span></label>
                   <RadioGroup name="salesTarget" value={form.salesTarget} onChange={v => update("salesTarget", v)} options={[
-                    { value: "enduser", label: "일반 소비자 (End-user 중심)" },
-                    { value: "b2b", label: "소매/재판매 (B2B/B2B2C)" },
+                    { value: "enduser", label: "일반 소비자 (개인 고객 직접 판매)" },
+                    { value: "b2b", label: "소매/재판매 (업체 납품)" },
                     { value: "both", label: "둘 다 병행" },
                   ]} />
                 </div>
