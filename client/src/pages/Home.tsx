@@ -234,9 +234,9 @@ export default function Home() {
                 <div>
                   <div className="text-xs text-gray-400">장소</div>
                   <div className="text-sm font-semibold text-white">스타크 강남빌딩 마이워크스페이스타워 B1 교육장</div>
-                  <div className="text-xs text-gray-400 mt-0.5">서울 서초구 강남대로53길</div>
+                  <div className="text-xs text-gray-400 mt-0.5">서울특별시 서초구 강남대로53길 8</div>
                   <a
-                    href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%EA%B0%95%EB%82%A8%EB%8C%80%EB%A1%9C53%EA%B8%B8%20%EC%8A%A4%ED%83%80%ED%81%AC%EA%B0%95%EB%82%A8%EB%B9%8C%EB%94%A9"
+                    href="https://naver.me/5t7s50VR"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-amber-400 mt-1 hover:text-amber-300"
