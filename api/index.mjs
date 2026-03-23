@@ -1,44 +1,10 @@
-"use strict";
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc2) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc2 = __getOwnPropDesc(from, key)) || desc2.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-
 // api-src/index.ts
-var index_exports = {};
-__export(index_exports, {
-  default: () => index_default
-});
-module.exports = __toCommonJS(index_exports);
-var import_express = __toESM(require("express"), 1);
-var import_express2 = require("@trpc/server/adapters/express");
+import express from "express";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
 
 // server/routers.ts
-var import_server3 = require("@trpc/server");
-var import_zod2 = require("zod");
+import { TRPCError as TRPCError3 } from "@trpc/server";
+import { z as z2 } from "zod";
 
 // shared/const.ts
 var COOKIE_NAME = "app_session_id";
@@ -65,10 +31,10 @@ function getSessionCookieOptions(req) {
 }
 
 // server/_core/systemRouter.ts
-var import_zod = require("zod");
+import { z } from "zod";
 
 // server/_core/notification.ts
-var import_server = require("@trpc/server");
+import { TRPCError } from "@trpc/server";
 
 // server/_core/env.ts
 var ENV = {
@@ -96,13 +62,13 @@ var buildEndpointUrl = (baseUrl) => {
 };
 var validatePayload = (input) => {
   if (!isNonEmptyString(input.title)) {
-    throw new import_server.TRPCError({
+    throw new TRPCError({
       code: "BAD_REQUEST",
       message: "Notification title is required."
     });
   }
   if (!isNonEmptyString(input.content)) {
-    throw new import_server.TRPCError({
+    throw new TRPCError({
       code: "BAD_REQUEST",
       message: "Notification content is required."
     });
@@ -110,13 +76,13 @@ var validatePayload = (input) => {
   const title = trimValue(input.title);
   const content = trimValue(input.content);
   if (title.length > TITLE_MAX_LENGTH) {
-    throw new import_server.TRPCError({
+    throw new TRPCError({
       code: "BAD_REQUEST",
       message: `Notification title must be at most ${TITLE_MAX_LENGTH} characters.`
     });
   }
   if (content.length > CONTENT_MAX_LENGTH) {
-    throw new import_server.TRPCError({
+    throw new TRPCError({
       code: "BAD_REQUEST",
       message: `Notification content must be at most ${CONTENT_MAX_LENGTH} characters.`
     });
@@ -126,13 +92,13 @@ var validatePayload = (input) => {
 async function notifyOwner(payload) {
   const { title, content } = validatePayload(payload);
   if (!ENV.forgeApiUrl) {
-    throw new import_server.TRPCError({
+    throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Notification service URL is not configured."
     });
   }
   if (!ENV.forgeApiKey) {
-    throw new import_server.TRPCError({
+    throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Notification service API key is not configured."
     });
@@ -164,17 +130,17 @@ async function notifyOwner(payload) {
 }
 
 // server/_core/trpc.ts
-var import_server2 = require("@trpc/server");
-var import_superjson = __toESM(require("superjson"), 1);
-var t = import_server2.initTRPC.context().create({
-  transformer: import_superjson.default
+import { initTRPC, TRPCError as TRPCError2 } from "@trpc/server";
+import superjson from "superjson";
+var t = initTRPC.context().create({
+  transformer: superjson
 });
 var router = t.router;
 var publicProcedure = t.procedure;
 var requireUser = t.middleware(async (opts) => {
   const { ctx, next } = opts;
   if (!ctx.user) {
-    throw new import_server2.TRPCError({ code: "UNAUTHORIZED", message: UNAUTHED_ERR_MSG });
+    throw new TRPCError2({ code: "UNAUTHORIZED", message: UNAUTHED_ERR_MSG });
   }
   return next({
     ctx: {
@@ -188,7 +154,7 @@ var adminProcedure = t.procedure.use(
   t.middleware(async (opts) => {
     const { ctx, next } = opts;
     if (!ctx.user || ctx.user.role !== "admin") {
-      throw new import_server2.TRPCError({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
+      throw new TRPCError2({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
     }
     return next({
       ctx: {
@@ -202,16 +168,16 @@ var adminProcedure = t.procedure.use(
 // server/_core/systemRouter.ts
 var systemRouter = router({
   health: publicProcedure.input(
-    import_zod.z.object({
-      timestamp: import_zod.z.number().min(0, "timestamp cannot be negative")
+    z.object({
+      timestamp: z.number().min(0, "timestamp cannot be negative")
     })
   ).query(() => ({
     ok: true
   })),
   notifyOwner: adminProcedure.input(
-    import_zod.z.object({
-      title: import_zod.z.string().min(1, "title is required"),
-      content: import_zod.z.string().min(1, "content is required")
+    z.object({
+      title: z.string().min(1, "title is required"),
+      content: z.string().min(1, "content is required")
     })
   ).mutation(async ({ input }) => {
     const delivered = await notifyOwner(input);
@@ -222,52 +188,52 @@ var systemRouter = router({
 });
 
 // server/db.ts
-var import_drizzle_orm = require("drizzle-orm");
-var import_node_postgres = require("drizzle-orm/node-postgres");
-var import_pg = __toESM(require("pg"), 1);
+import { desc, eq, sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/node-postgres";
+import pg from "pg";
 
 // drizzle/schema.ts
-var import_pg_core = require("drizzle-orm/pg-core");
-var roleEnum = (0, import_pg_core.pgEnum)("role", ["user", "admin"]);
-var attendanceStatusEnum = (0, import_pg_core.pgEnum)("attendance_status", ["attend", "not_attend", "reviewing"]);
-var salesExperienceEnum = (0, import_pg_core.pgEnum)("sales_experience", ["under1", "1to3", "3to5", "5to10", "over10"]);
-var annualSalesVolumeEnum = (0, import_pg_core.pgEnum)("annual_sales_volume", ["under100", "100to300", "300to500", "500to1000", "over1000"]);
-var salesTargetEnum = (0, import_pg_core.pgEnum)("sales_target", ["enduser", "b2b", "both"]);
-var installationMethodEnum = (0, import_pg_core.pgEnum)("installation_method", ["own_team", "outsource", "mixed"]);
-var installationStaffEnum = (0, import_pg_core.pgEnum)("installation_staff", ["none", "1to2", "3to5", "6to10", "over10"]);
-var iotExpansionIntentEnum = (0, import_pg_core.pgEnum)("iot_expansion_intent", ["already", "reviewing", "interested", "none"]);
-var users = (0, import_pg_core.pgTable)("users", {
-  id: (0, import_pg_core.serial)("id").primaryKey(),
-  openId: (0, import_pg_core.varchar)("open_id", { length: 64 }).notNull().unique(),
-  name: (0, import_pg_core.text)("name"),
-  email: (0, import_pg_core.varchar)("email", { length: 320 }),
-  loginMethod: (0, import_pg_core.varchar)("login_method", { length: 64 }),
+import { pgEnum, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+var roleEnum = pgEnum("role", ["user", "admin"]);
+var attendanceStatusEnum = pgEnum("attendance_status", ["attend", "not_attend", "reviewing"]);
+var salesExperienceEnum = pgEnum("sales_experience", ["under1", "1to3", "3to5", "5to10", "over10"]);
+var annualSalesVolumeEnum = pgEnum("annual_sales_volume", ["under100", "100to300", "300to500", "500to1000", "over1000"]);
+var salesTargetEnum = pgEnum("sales_target", ["enduser", "b2b", "both"]);
+var installationMethodEnum = pgEnum("installation_method", ["own_team", "outsource", "mixed"]);
+var installationStaffEnum = pgEnum("installation_staff", ["none", "1to2", "3to5", "6to10", "over10"]);
+var iotExpansionIntentEnum = pgEnum("iot_expansion_intent", ["already", "reviewing", "interested", "none"]);
+var users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  openId: varchar("open_id", { length: 64 }).notNull().unique(),
+  name: text("name"),
+  email: varchar("email", { length: 320 }),
+  loginMethod: varchar("login_method", { length: 64 }),
   role: roleEnum("role").default("user").notNull(),
-  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow().notNull(),
-  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow().notNull(),
-  lastSignedIn: (0, import_pg_core.timestamp)("last_signed_in").defaultNow().notNull()
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  lastSignedIn: timestamp("last_signed_in").defaultNow().notNull()
 });
-var surveyResponses = (0, import_pg_core.pgTable)("survey_responses", {
-  id: (0, import_pg_core.serial)("id").primaryKey(),
+var surveyResponses = pgTable("survey_responses", {
+  id: serial("id").primaryKey(),
   attendanceStatus: attendanceStatusEnum("attendance_status").notNull(),
-  businessName: (0, import_pg_core.varchar)("business_name", { length: 200 }).notNull(),
-  contactName: (0, import_pg_core.varchar)("contact_name", { length: 100 }).notNull(),
-  contactPhone: (0, import_pg_core.varchar)("contact_phone", { length: 30 }).notNull(),
-  email: (0, import_pg_core.varchar)("email", { length: 320 }),
-  businessRegion: (0, import_pg_core.varchar)("business_region", { length: 50 }).notNull(),
-  businessRegionDetail: (0, import_pg_core.varchar)("business_region_detail", { length: 100 }),
+  businessName: varchar("business_name", { length: 200 }).notNull(),
+  contactName: varchar("contact_name", { length: 100 }).notNull(),
+  contactPhone: varchar("contact_phone", { length: 30 }).notNull(),
+  email: varchar("email", { length: 320 }),
+  businessRegion: varchar("business_region", { length: 50 }).notNull(),
+  businessRegionDetail: varchar("business_region_detail", { length: 100 }),
   salesExperience: salesExperienceEnum("sales_experience").notNull(),
   annualSalesVolume: annualSalesVolumeEnum("annual_sales_volume").notNull(),
   salesTarget: salesTargetEnum("sales_target").notNull(),
   installationMethod: installationMethodEnum("installation_method").notNull(),
   installationStaff: installationStaffEnum("installation_staff").notNull(),
   iotExpansionIntent: iotExpansionIntentEnum("iot_expansion_intent").notNull(),
-  attendancePurpose: (0, import_pg_core.text)("attendance_purpose").notNull(),
-  attendancePurposeOther: (0, import_pg_core.text)("attendance_purpose_other"),
-  interestedProducts: (0, import_pg_core.text)("interested_products"),
-  additionalInquiry: (0, import_pg_core.text)("additional_inquiry"),
-  submittedAt: (0, import_pg_core.timestamp)("submitted_at").defaultNow().notNull(),
-  ipAddress: (0, import_pg_core.varchar)("ip_address", { length: 45 })
+  attendancePurpose: text("attendance_purpose").notNull(),
+  attendancePurposeOther: text("attendance_purpose_other"),
+  interestedProducts: text("interested_products"),
+  additionalInquiry: text("additional_inquiry"),
+  submittedAt: timestamp("submitted_at").defaultNow().notNull(),
+  ipAddress: varchar("ip_address", { length: 45 })
 });
 
 // server/db.ts
@@ -275,12 +241,12 @@ var _db = null;
 async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      const pool = new import_pg.default.Pool({
+      const pool = new pg.Pool({
         connectionString: process.env.DATABASE_URL,
         ssl: { rejectUnauthorized: false },
         max: 5
       });
-      _db = (0, import_node_postgres.drizzle)(pool);
+      _db = drizzle(pool);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -335,7 +301,7 @@ async function getUserByOpenId(openId) {
     console.warn("[Database] Cannot get user: database not available");
     return void 0;
   }
-  const result = await db.select().from(users).where((0, import_drizzle_orm.eq)(users.openId, openId)).limit(1);
+  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
   return result.length > 0 ? result[0] : void 0;
 }
 async function insertSurveyResponse(data) {
@@ -346,41 +312,41 @@ async function insertSurveyResponse(data) {
 async function getAllSurveyResponses() {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  return db.select().from(surveyResponses).orderBy((0, import_drizzle_orm.desc)(surveyResponses.submittedAt));
+  return db.select().from(surveyResponses).orderBy(desc(surveyResponses.submittedAt));
 }
 async function getSurveyResponseCount() {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  const result = await db.select({ count: import_drizzle_orm.sql`count(*)` }).from(surveyResponses);
+  const result = await db.select({ count: sql`count(*)` }).from(surveyResponses);
   return Number(result[0]?.count ?? 0);
 }
 
 // server/routers.ts
-var surveyInputSchema = import_zod2.z.object({
+var surveyInputSchema = z2.object({
   // 섹션 1
-  attendanceStatus: import_zod2.z.enum(["attend", "not_attend", "reviewing"]),
-  businessName: import_zod2.z.string().min(1).max(200),
-  contactName: import_zod2.z.string().min(1).max(100),
-  contactPhone: import_zod2.z.string().min(1).max(30),
-  email: import_zod2.z.string().email().optional().or(import_zod2.z.literal("")),
+  attendanceStatus: z2.enum(["attend", "not_attend", "reviewing"]),
+  businessName: z2.string().min(1).max(200),
+  contactName: z2.string().min(1).max(100),
+  contactPhone: z2.string().min(1).max(30),
+  email: z2.string().email().optional().or(z2.literal("")),
   // 섹션 2
-  businessRegion: import_zod2.z.string().min(1).max(50),
-  businessRegionDetail: import_zod2.z.string().max(100).optional(),
-  salesExperience: import_zod2.z.enum(["under1", "1to3", "3to5", "5to10", "over10"]),
-  annualSalesVolume: import_zod2.z.enum(["under100", "100to300", "300to500", "500to1000", "over1000"]),
-  salesTarget: import_zod2.z.enum(["enduser", "b2b", "both"]),
+  businessRegion: z2.string().min(1).max(50),
+  businessRegionDetail: z2.string().max(100).optional(),
+  salesExperience: z2.enum(["under1", "1to3", "3to5", "5to10", "over10"]),
+  annualSalesVolume: z2.enum(["under100", "100to300", "300to500", "500to1000", "over1000"]),
+  salesTarget: z2.enum(["enduser", "b2b", "both"]),
   // 섹션 3
-  installationMethod: import_zod2.z.enum(["own_team", "outsource", "mixed"]),
-  installationStaff: import_zod2.z.enum(["none", "1to2", "3to5", "6to10", "over10"]),
+  installationMethod: z2.enum(["own_team", "outsource", "mixed"]),
+  installationStaff: z2.enum(["none", "1to2", "3to5", "6to10", "over10"]),
   // 섹션 4
-  iotExpansionIntent: import_zod2.z.enum(["already", "reviewing", "interested", "none"]),
+  iotExpansionIntent: z2.enum(["already", "reviewing", "interested", "none"]),
   // 섹션 5
-  attendancePurpose: import_zod2.z.array(import_zod2.z.string()).min(1),
-  attendancePurposeOther: import_zod2.z.string().optional(),
+  attendancePurpose: z2.array(z2.string()).min(1),
+  attendancePurposeOther: z2.string().optional(),
   // 관심 제품
-  interestedProducts: import_zod2.z.array(import_zod2.z.string()).optional(),
+  interestedProducts: z2.array(z2.string()).optional(),
   // 기타
-  additionalInquiry: import_zod2.z.string().optional()
+  additionalInquiry: z2.string().optional()
 });
 var appRouter = router({
   system: systemRouter,
@@ -421,7 +387,7 @@ var appRouter = router({
     // 전체 응답 조회 (관리자 전용)
     list: protectedProcedure.query(async ({ ctx }) => {
       if (ctx.user.role !== "admin") {
-        throw new import_server3.TRPCError({ code: "FORBIDDEN", message: "\uAD00\uB9AC\uC790\uB9CC \uC811\uADFC \uAC00\uB2A5\uD569\uB2C8\uB2E4." });
+        throw new TRPCError3({ code: "FORBIDDEN", message: "\uAD00\uB9AC\uC790\uB9CC \uC811\uADFC \uAC00\uB2A5\uD569\uB2C8\uB2E4." });
       }
       const responses = await getAllSurveyResponses();
       return responses;
@@ -440,9 +406,9 @@ var HttpError = class extends Error {
 var ForbiddenError = (msg) => new HttpError(403, msg);
 
 // server/_core/sdk.ts
-var import_axios = __toESM(require("axios"), 1);
-var import_cookie = require("cookie");
-var import_jose = require("jose");
+import axios from "axios";
+import { parse as parseCookieHeader } from "cookie";
+import { SignJWT, jwtVerify } from "jose";
 var isNonEmptyString2 = (value) => typeof value === "string" && value.length > 0;
 var EXCHANGE_TOKEN_PATH = `/webdev.v1.WebDevAuthPublicService/ExchangeToken`;
 var GET_USER_INFO_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfo`;
@@ -484,7 +450,7 @@ var OAuthService = class {
     return data;
   }
 };
-var createOAuthHttpClient = () => import_axios.default.create({
+var createOAuthHttpClient = () => axios.create({
   baseURL: ENV.oAuthServerUrl,
   timeout: AXIOS_TIMEOUT_MS
 });
@@ -541,7 +507,7 @@ var SDKServer = class {
     if (!cookieHeader) {
       return /* @__PURE__ */ new Map();
     }
-    const parsed = (0, import_cookie.parse)(cookieHeader);
+    const parsed = parseCookieHeader(cookieHeader);
     return new Map(Object.entries(parsed));
   }
   getSessionSecret() {
@@ -568,7 +534,7 @@ var SDKServer = class {
     const expiresInMs = options.expiresInMs ?? ONE_YEAR_MS;
     const expirationSeconds = Math.floor((issuedAt + expiresInMs) / 1e3);
     const secretKey = this.getSessionSecret();
-    return new import_jose.SignJWT({
+    return new SignJWT({
       openId: payload.openId,
       appId: payload.appId,
       name: payload.name
@@ -581,7 +547,7 @@ var SDKServer = class {
     }
     try {
       const secretKey = this.getSessionSecret();
-      const { payload } = await (0, import_jose.jwtVerify)(cookieValue, secretKey, {
+      const { payload } = await jwtVerify(cookieValue, secretKey, {
         algorithms: ["HS256"]
       });
       const { openId, appId, name } = payload;
@@ -672,12 +638,12 @@ async function createContext(opts) {
 }
 
 // api-src/index.ts
-var app = (0, import_express.default)();
-app.use(import_express.default.json({ limit: "50mb" }));
-app.use(import_express.default.urlencoded({ limit: "50mb", extended: true }));
+var app = express();
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(
   "/api/trpc",
-  (0, import_express2.createExpressMiddleware)({
+  createExpressMiddleware({
     router: appRouter,
     createContext
   })
@@ -686,3 +652,6 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true, db: !!process.env.DATABASE_URL });
 });
 var index_default = app;
+export {
+  index_default as default
+};

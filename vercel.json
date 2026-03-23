@@ -5,11 +5,11 @@
   "framework": null,
   "installCommand": "npx pnpm install",
   "functions": {
-    "api/index.js": {
+    "api/index.mjs": {
       "maxDuration": 30
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api" }
+    { "source": "/api/(.*)", "destination": "/api/index.mjs" }
   ]
 }
