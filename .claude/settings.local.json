@@ -10,7 +10,12 @@
       "Bash(npx tsc:*)",
       "Bash(git init:*)",
       "Bash(git remote:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npx vercel:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://aqara-partner-invite.vercel.app/api/trpc/survey.count\")",
+      "Bash(curl -s \"https://aqara-partner-invite.vercel.app/api/trpc/survey.count\")"
     ]
   }
 }
