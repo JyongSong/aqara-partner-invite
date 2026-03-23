@@ -83,7 +83,7 @@ function RadioGroup({ name, value, onChange, options }: {
             {value === opt.value && <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />}
           </div>
           <input type="radio" name={name} value={opt.value} checked={value === opt.value} onChange={() => onChange(opt.value)} className="sr-only" />
-          <span className={`text-sm font-medium ${value === opt.value ? "text-amber-800" : "text-gray-700"}`}>{opt.label}</span>
+          <span className={`text-base font-medium ${value === opt.value ? "text-amber-800" : "text-gray-700"}`}>{opt.label}</span>
         </label>
       ))}
     </div>
@@ -106,7 +106,7 @@ function CheckboxGroup({ value, onChange, options }: {
             {value.includes(opt.value) && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
           </div>
           <input type="checkbox" value={opt.value} checked={value.includes(opt.value)} onChange={() => toggle(opt.value)} className="sr-only" />
-          <span className={`text-sm font-medium ${value.includes(opt.value) ? "text-amber-800" : "text-gray-700"}`}>{opt.label}</span>
+          <span className={`text-base font-medium ${value.includes(opt.value) ? "text-amber-800" : "text-gray-700"}`}>{opt.label}</span>
         </label>
       ))}
     </div>
@@ -390,17 +390,17 @@ export default function Home() {
             <div className="flex items-start gap-3">
               <Gift className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
               <div>
-                <div className="text-sm font-bold text-amber-800 mb-1">사전 설문 완료 혜택</div>
-                <div className="text-xs text-amber-700">사전 설문 응답 완료 시 <strong>아카라 스마트홈 스타터킷</strong>을 설명회 현장에서 증정드립니다.</div>
-                <div className="text-xs text-amber-600 mt-1">※ 참석자에 한하여 1인 1세트 제공 / 사전 신청자 한정</div>
+                <div className="text-base font-bold text-amber-800 mb-1">사전 설문 완료 혜택</div>
+                <div className="text-sm text-amber-700">사전 설문 응답 완료 시 <strong>아카라 스마트홈 스타터킷</strong>을 설명회 현장에서 증정드립니다.</div>
+                <div className="text-sm text-amber-600 mt-1">※ 참석자에 한하여 1인 1세트 제공 / 사전 신청자 한정</div>
               </div>
             </div>
           </div>
 
           <div className="text-center mb-8">
             <div className="text-xs font-semibold text-amber-600 tracking-widest uppercase mb-2">Pre-Survey</div>
-            <h2 className="text-xl font-bold text-gray-900">참석 신청 + 사전 설문</h2>
-            <p className="text-sm text-gray-500 mt-2">
+            <h2 className="text-2xl font-bold text-gray-900">참석 신청 + 사전 설문</h2>
+            <p className="text-base text-gray-500 mt-2">
               사전 설문 응답 완료 시 <span className="font-semibold text-amber-600">아카라 스마트홈 스타터킷</span>을 현장에서 증정합니다.
             </p>
           </div>
@@ -409,12 +409,12 @@ export default function Home() {
             {/* 섹션 1 */}
             <div>
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 bg-amber-500 text-black text-xs font-bold rounded-full flex items-center justify-center">1</div>
-                <h3 className="text-base font-bold text-gray-900">기본 정보 & 참석 여부</h3>
+                <div className="w-7 h-7 bg-amber-500 text-black text-sm font-bold rounded-full flex items-center justify-center">1</div>
+                <h3 className="text-lg font-bold text-gray-900">기본 정보 & 참석 여부</h3>
               </div>
               <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q1. 참석 여부 <span className="text-red-500">*</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q1. 참석 여부 <span className="text-red-500">*</span></label>
                   <RadioGroup name="attendance" value={form.attendanceStatus} onChange={v => update("attendanceStatus", v)} options={[
                     { value: "attend", label: "참석 가능" },
                     { value: "not_attend", label: "참석 불가" },
@@ -422,28 +422,28 @@ export default function Home() {
                   ]} />
                 </div>
                 <div data-error={errors.businessName}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q2. 업체명 / 상호 <span className="text-red-500">*</span></label>
-                  <input type="text" value={form.businessName} onChange={e => update("businessName", e.target.value)} placeholder="업체명을 입력해 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
-                  {errors.businessName && <p className="text-red-500 text-xs mt-1">{errors.businessName}</p>}
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q2. 업체명 / 상호 <span className="text-red-500">*</span></label>
+                  <input type="text" value={form.businessName} onChange={e => update("businessName", e.target.value)} placeholder="업체명을 입력해 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors" />
+                  {errors.businessName && <p className="text-red-500 text-sm mt-1">{errors.businessName}</p>}
                 </div>
                 <div data-error={errors.contactName}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q3. 성함 <span className="text-red-500">*</span></label>
-                  <input type="text" value={form.contactName} onChange={e => update("contactName", e.target.value)} placeholder="성함을 입력해 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
-                  {errors.contactName && <p className="text-red-500 text-xs mt-1">{errors.contactName}</p>}
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q3. 성함 <span className="text-red-500">*</span></label>
+                  <input type="text" value={form.contactName} onChange={e => update("contactName", e.target.value)} placeholder="성함을 입력해 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors" />
+                  {errors.contactName && <p className="text-red-500 text-sm mt-1">{errors.contactName}</p>}
                 </div>
                 <div data-error={errors.contactPosition}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q4. 직책 <span className="text-red-500">*</span></label>
-                  <input type="text" value={form.contactPosition} onChange={e => update("contactPosition", e.target.value)} placeholder="직책을 입력해 주세요 (예: 사장, 실장, 기사)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
-                  {errors.contactPosition && <p className="text-red-500 text-xs mt-1">{errors.contactPosition}</p>}
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q4. 직책 <span className="text-red-500">*</span></label>
+                  <input type="text" value={form.contactPosition} onChange={e => update("contactPosition", e.target.value)} placeholder="직책을 입력해 주세요 (예: 사장, 실장, 기사)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors" />
+                  {errors.contactPosition && <p className="text-red-500 text-sm mt-1">{errors.contactPosition}</p>}
                 </div>
                 <div data-error={errors.contactPhone}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q5. 연락처 <span className="text-red-500">*</span></label>
-                  <input type="tel" value={form.contactPhone} onChange={e => update("contactPhone", e.target.value)} placeholder="010-0000-0000" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
-                  {errors.contactPhone && <p className="text-red-500 text-xs mt-1">{errors.contactPhone}</p>}
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q5. 연락처 <span className="text-red-500">*</span></label>
+                  <input type="tel" value={form.contactPhone} onChange={e => update("contactPhone", e.target.value)} placeholder="010-0000-0000" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors" />
+                  {errors.contactPhone && <p className="text-red-500 text-sm mt-1">{errors.contactPhone}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">이메일 (선택)</label>
-                  <input type="email" value={form.email} onChange={e => update("email", e.target.value)} placeholder="example@company.com" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
+                  <label className="block text-base font-semibold text-gray-800 mb-2">이메일 (선택)</label>
+                  <input type="email" value={form.email} onChange={e => update("email", e.target.value)} placeholder="example@company.com" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors" />
                 </div>
               </div>
             </div>
@@ -453,24 +453,24 @@ export default function Home() {
             {/* 섹션 2 */}
             <div>
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 bg-amber-500 text-black text-xs font-bold rounded-full flex items-center justify-center">2</div>
-                <h3 className="text-base font-bold text-gray-900">사업 현황</h3>
+                <div className="w-7 h-7 bg-amber-500 text-black text-sm font-bold rounded-full flex items-center justify-center">2</div>
+                <h3 className="text-lg font-bold text-gray-900">사업 현황</h3>
               </div>
               <div className="space-y-5">
                 <div data-error={errors.businessAddress}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q6. 사업장 주소 <span className="text-red-500">*</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q6. 사업장 주소 <span className="text-red-500">*</span></label>
                   <div className="flex gap-2 mb-2">
-                    <input type="text" value={form.businessZipcode} readOnly placeholder="우편번호" className="w-28 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 text-gray-600" />
-                    <button type="button" onClick={openPostcodeSearch} className="px-4 py-3 bg-amber-500 text-white text-sm font-semibold rounded-xl hover:bg-amber-600 transition-colors whitespace-nowrap">
+                    <input type="text" value={form.businessZipcode} readOnly placeholder="우편번호" className="w-28 border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base bg-gray-50 text-gray-600" />
+                    <button type="button" onClick={openPostcodeSearch} className="px-4 py-3.5 bg-amber-500 text-white text-base font-semibold rounded-xl hover:bg-amber-600 transition-colors whitespace-nowrap">
                       우편번호 검색
                     </button>
                   </div>
-                  <input type="text" value={form.businessAddress} readOnly placeholder="주소 검색 버튼을 눌러 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 text-gray-600 mb-2" />
-                  {errors.businessAddress && <p className="text-red-500 text-xs mt-1 mb-2">{errors.businessAddress}</p>}
-                  <input id="businessAddressDetail" type="text" value={form.businessAddressDetail} onChange={e => update("businessAddressDetail", e.target.value)} placeholder="상세 주소 입력 (건물명, 층, 호수 등)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors" />
+                  <input type="text" value={form.businessAddress} readOnly placeholder="주소 검색 버튼을 눌러 주세요" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base bg-gray-50 text-gray-600 mb-2" />
+                  {errors.businessAddress && <p className="text-red-500 text-sm mt-1 mb-2">{errors.businessAddress}</p>}
+                  <input id="businessAddressDetail" type="text" value={form.businessAddressDetail} onChange={e => update("businessAddressDetail", e.target.value)} placeholder="상세 주소 입력 (건물명, 층, 호수 등)" className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q7. 도어락 판매 경력 <span className="text-red-500">*</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q7. 도어락 판매 경력 <span className="text-red-500">*</span></label>
                   <RadioGroup name="salesExp" value={form.salesExperience} onChange={v => update("salesExperience", v)} options={[
                     { value: "under1", label: "1년 미만" },
                     { value: "1to3", label: "1~3년" },
@@ -480,7 +480,7 @@ export default function Home() {
                   ]} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q8. 2025년 연간 도어락 판매 대수 <span className="text-red-500">*</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q8. 2025년 연간 도어락 판매 대수 <span className="text-red-500">*</span></label>
                   <RadioGroup name="salesVol" value={form.annualSalesVolume} onChange={v => update("annualSalesVolume", v)} options={[
                     { value: "under100", label: "100대 미만" },
                     { value: "100to300", label: "100~300대" },
@@ -490,7 +490,7 @@ export default function Home() {
                   ]} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q9. 주요 판매 대상 <span className="text-red-500">*</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q9. 주요 판매 대상 <span className="text-red-500">*</span></label>
                   <RadioGroup name="salesTarget" value={form.salesTarget} onChange={v => update("salesTarget", v)} options={[
                     { value: "enduser", label: "일반 소비자 (End-user 중심)" },
                     { value: "b2b", label: "소매/재판매 (B2B/B2B2C)" },
@@ -505,12 +505,12 @@ export default function Home() {
             {/* 섹션 3 */}
             <div>
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 bg-amber-500 text-black text-xs font-bold rounded-full flex items-center justify-center">3</div>
-                <h3 className="text-base font-bold text-gray-900">설치 운영 역량</h3>
+                <div className="w-7 h-7 bg-amber-500 text-black text-sm font-bold rounded-full flex items-center justify-center">3</div>
+                <h3 className="text-lg font-bold text-gray-900">설치 운영 역량</h3>
               </div>
               <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q10. 설치 기사 운영 방식 <span className="text-red-500">*</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q10. 설치 기사 운영 방식 <span className="text-red-500">*</span></label>
                   <RadioGroup name="installMethod" value={form.installationMethod} onChange={v => update("installationMethod", v)} options={[
                     { value: "own_team", label: "자체 설치팀 운영" },
                     { value: "outsource", label: "외주(협력기사) 활용" },
@@ -518,7 +518,7 @@ export default function Home() {
                   ]} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q11. 설치 기사 인원 <span className="text-red-500">*</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q11. 설치 기사 인원 <span className="text-red-500">*</span></label>
                   <RadioGroup name="installStaff" value={form.installationStaff} onChange={v => update("installationStaff", v)} options={[
                     { value: "none", label: "없음" },
                     { value: "1to2", label: "1~2명" },
@@ -535,11 +535,11 @@ export default function Home() {
             {/* 섹션 4 */}
             <div>
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 bg-amber-500 text-black text-xs font-bold rounded-full flex items-center justify-center">4</div>
-                <h3 className="text-base font-bold text-gray-900">사업 확장 가능성</h3>
+                <div className="w-7 h-7 bg-amber-500 text-black text-sm font-bold rounded-full flex items-center justify-center">4</div>
+                <h3 className="text-lg font-bold text-gray-900">사업 확장 가능성</h3>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-800 mb-2">Q12. 도어락 외 IoT/설치형 제품 사업 확대 의향 <span className="text-red-500">*</span></label>
+                <label className="block text-base font-semibold text-gray-800 mb-2">Q12. 도어락 외 IoT/설치형 제품 사업 확대 의향 <span className="text-red-500">*</span></label>
                 <RadioGroup name="iotIntent" value={form.iotExpansionIntent} onChange={v => update("iotExpansionIntent", v)} options={[
                   { value: "already", label: "이미 진행 중" },
                   { value: "reviewing", label: "검토 중" },
@@ -554,21 +554,21 @@ export default function Home() {
             {/* 섹션 5 */}
             <div>
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 bg-amber-500 text-black text-xs font-bold rounded-full flex items-center justify-center">5</div>
-                <h3 className="text-base font-bold text-gray-900">기대 및 참여 목적</h3>
+                <div className="w-7 h-7 bg-amber-500 text-black text-sm font-bold rounded-full flex items-center justify-center">5</div>
+                <h3 className="text-lg font-bold text-gray-900">기대 및 참여 목적</h3>
               </div>
               <div className="space-y-5">
                 <div data-error={errors.attendancePurpose}>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">Q13. 설명회 참석 사유 / 기대 사항 <span className="text-red-500">*</span> <span className="text-gray-400 font-normal">(복수 선택 가능)</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">Q13. 설명회 참석 사유 / 기대 사항 <span className="text-red-500">*</span> <span className="text-gray-400 font-normal">(복수 선택 가능)</span></label>
                   <CheckboxGroup value={form.attendancePurpose} onChange={v => update("attendancePurpose", v)} options={PURPOSE_OPTIONS} />
-                  {errors.attendancePurpose && <p className="text-red-500 text-xs mt-1">{errors.attendancePurpose}</p>}
+                  {errors.attendancePurpose && <p className="text-red-500 text-sm mt-1">{errors.attendancePurpose}</p>}
                   {form.attendancePurpose.includes("other") && (
-                    <textarea value={form.attendancePurposeOther} onChange={e => update("attendancePurposeOther", e.target.value)} placeholder="기타 내용을 입력해 주세요" rows={2} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors mt-2 resize-none" />
+                    <textarea value={form.attendancePurposeOther} onChange={e => update("attendancePurposeOther", e.target.value)} placeholder="기타 내용을 입력해 주세요" rows={2} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors mt-2 resize-none" />
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">관심 제품 <span className="text-gray-400 font-normal">(복수 선택 가능)</span></label>
+                  <label className="block text-base font-semibold text-gray-800 mb-2">관심 제품 <span className="text-gray-400 font-normal">(복수 선택 가능)</span></label>
                   <div className="grid grid-cols-3 gap-2">
                     {PRODUCTS.map(p => (
                       <label key={p.value} className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.interestedProducts.includes(p.value) ? "border-amber-500 bg-amber-50" : "border-gray-200 bg-white hover:border-gray-300"}`}>
@@ -584,8 +584,8 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 mb-2">기타 문의사항 <span className="text-gray-400 font-normal">(선택)</span></label>
-                  <textarea value={form.additionalInquiry} onChange={e => update("additionalInquiry", e.target.value)} placeholder="궁금하신 점이나 요청 사항을 자유롭게 입력해 주세요." rows={3} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-amber-500 focus:outline-none transition-colors resize-none" />
+                  <label className="block text-base font-semibold text-gray-800 mb-2">기타 문의사항 <span className="text-gray-400 font-normal">(선택)</span></label>
+                  <textarea value={form.additionalInquiry} onChange={e => update("additionalInquiry", e.target.value)} placeholder="궁금하신 점이나 요청 사항을 자유롭게 입력해 주세요." rows={3} className="w-full border-2 border-gray-200 rounded-xl px-4 py-3.5 text-base focus:border-amber-500 focus:outline-none transition-colors resize-none" />
                 </div>
               </div>
             </div>
@@ -594,7 +594,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-400 text-white font-bold py-4 rounded-xl text-base transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-400 text-white font-bold py-4 rounded-xl text-lg transition-colors flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -612,7 +612,7 @@ export default function Home() {
       {/* ── CONTACT ── */}
       <section className="bg-gray-50 py-10">
         <div className="max-w-xl mx-auto px-5 text-center">
-          <h3 className="text-base font-bold text-gray-900 mb-4">문의</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-4">문의</h3>
           <div className="space-y-2">
             <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
               <span className="font-semibold">담당자:</span> 송지용
