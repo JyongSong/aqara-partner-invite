@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "buildCommand": "npx vite build",
+  "buildCommand": "npx vite build && npx esbuild api/index.ts --platform=node --packages=external --bundle --format=esm --outfile=api/index.mjs --tsconfig=tsconfig.json",
   "outputDirectory": "dist/public",
   "framework": null,
   "installCommand": "npx pnpm install",
   "functions": {
-    "api/index.ts": {
+    "api/index.mjs": {
       "maxDuration": 30
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api" }
+    { "source": "/api/(.*)", "destination": "/api/index.mjs" }
   ]
 }
