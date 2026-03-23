@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(tsx|ts|jsx|js\\)$\")",
+      "Bash(xargs ls:*)",
+      "Bash(cat /Users/zhiyongsong/warranty-h5/prisma/migrations/*/migration.sql)",
+      "Bash(pnpm install:*)",
+      "Bash(npx pnpm:*)",
+      "Bash(node scripts/setup-supabase-schema.mjs)",
+      "Bash(npx tsc:*)",
+      "Bash(git init:*)",
+      "Bash(git remote:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
