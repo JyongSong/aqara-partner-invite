@@ -367,7 +367,7 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3">
             {[
               { icon: "🏆", title: "공식 파트너 등록", desc: "아카라 공식 소매 파트너 자격 취득" },
-              { icon: "💰", title: "비판매 샘플 제공", desc: "전시용 도어락 1세트 무상 제공" },
+              { icon: "🚪", title: "비판매 샘플 제공", desc: "전시용 도어락 1세트 무상 제공" },
               { icon: "📚", title: "무상 교육", desc: "설치 및 영업 교육 무상 제공" },
               { icon: "🎁", title: "스타터킷 증정", desc: "사전 설문 완료 시 현장 증정" },
             ].map((b, i) => (
