@@ -242,7 +242,6 @@ export default function Home() {
             {[
               "공식 소매 파트너 등록 기회",
               "설치/앱 서비스 교육 무상 제공",
-              "설명회 당일 특별 공급가 제공",
               "아카라 스마트홈 스타터킷 증정 (사전 설문 응답 시)",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2.5">
@@ -335,7 +334,7 @@ export default function Home() {
               { icon: Award, title: "새로운 유통 정책 및 파트너 제도 안내", items: ["소매상 직공급 구조 및 운영 방식", "공식 등록 소매상 자격 요건 및 혜택", "파트너 수익 구조 안내"] },
               { icon: Zap, title: "도어락 + IoT 설치 서비스 교육", items: ["도어락 설치 및 고객 응대 방법", "IoT 기능 설명 및 앱 설치 지원", "고객 경험 향상 서비스 가이드"] },
               { icon: Star, title: "IoT 제품 확장 판매 기회 소개", items: ["아카라 카메라, 조명, 스위치 등", "설치형 제품 판매 및 시공 수익 모델", "패키지 제안 및 업셀링 전략"] },
-              { icon: Gift, title: "현장 등록 및 특별 혜택", items: ["공식 소매 파트너 현장 등록", "설명회 참석자 특별 공급가 주문 기회", "점심 식사 제공 및 쇼룸 투어"] },
+              { icon: Gift, title: "현장 등록 및 특별 혜택", items: ["공식 소매 파트너 현장 등록", "비판매 샘플 제공-전시용 도어락 1세트 무상제공", "점심 식사 제공 및 쇼룸 투어"] },
             ].map((prog, i) => (
               <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div className="flex items-center gap-3 mb-3">
@@ -368,7 +367,7 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3">
             {[
               { icon: "🏆", title: "공식 파트너 등록", desc: "아카라 공식 소매 파트너 자격 취득" },
-              { icon: "💰", title: "특별 공급가", desc: "설명회 당일 한정 특별 공급가 제공" },
+              { icon: "💰", title: "비판매 샘플 제공", desc: "전시용 도어락 1세트 무상 제공" },
               { icon: "📚", title: "무상 교육", desc: "설치 및 영업 교육 무상 제공" },
               { icon: "🎁", title: "스타터킷 증정", desc: "사전 설문 완료 시 현장 증정" },
             ].map((b, i) => (
