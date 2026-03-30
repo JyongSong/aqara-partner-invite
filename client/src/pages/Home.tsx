@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { MapPin, Calendar, Clock, Users, Gift, ChevronDown, Phone, Mail, CheckCircle2, Star, Award, Zap } from "lucide-react";
+import { MapPin, Calendar, Clock, Users, Gift, ChevronDown, Phone, Mail, CheckCircle2, Star, Award, Zap, AlertTriangle } from "lucide-react";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663375882276/AcFeksXYT56o4U9QsgyZGe/aqara_logo_6a235e61.png";
 const K100_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663375882276/AcFeksXYT56o4U9QsgyZGe/doorlock_k100_29952d57.png";
@@ -283,6 +283,13 @@ export default function Home() {
                 <div>
                   <div className="text-sm text-gray-400">참석 인원</div>
                   <div className="text-base font-semibold text-white">선착순 50명 (사전 신청 필수)</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 mt-1 pt-3 border-t border-white/10">
+                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <div className="text-sm text-gray-400">주의사항</div>
+                  <div className="text-sm text-gray-300">주차 공간이 한정되어 있으므로 대중교통을 이용해 주시기 바랍니다.</div>
                 </div>
               </div>
             </div>

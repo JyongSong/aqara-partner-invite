@@ -1,4 +1,4 @@
-import { CheckCircle2, Calendar, MapPin, Phone, Mail } from "lucide-react";
+import { CheckCircle2, Calendar, MapPin, Phone, Mail, AlertTriangle } from "lucide-react";
 import { useLocation } from "wouter";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663375882276/AcFeksXYT56o4U9QsgyZGe/aqara_logo_6a235e61.png";
@@ -61,6 +61,13 @@ export default function SurveySuccess() {
                     <MapPin className="w-3 h-3" />
                     네이버 지도로 보기 →
                   </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 mt-1 pt-3 border-t border-gray-200">
+                <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <div className="text-xs text-gray-500">주의사항</div>
+                  <div className="text-xs text-gray-700">주차 공간이 한정되어 있으므로 대중교통을 이용해 주시기 바랍니다.</div>
                 </div>
               </div>
             </div>
